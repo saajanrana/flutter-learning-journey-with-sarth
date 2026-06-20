@@ -14,16 +14,16 @@ class WelcomeScreen extends StatelessWidget {
           'This is a scheduling app that will help maintain a daily schedule.',
           textScaler: TextScaler.linear(1.5),
         ),
-        Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ElevatedButton(
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CardsScreen()),
-            ),
-            child: Text('Click me to go to the app!'),
-          ),
-        ),
+        // Padding(
+        //   padding: EdgeInsets.all(8.0),
+        //   child: ElevatedButton(
+        //     onPressed: () => Navigator.push(
+        //       context,
+        //       MaterialPageRoute(builder: (context) => CardsScreen()),
+        //     ),
+        //     child: Text('Click me to go to the app!'),
+        //   ),
+        // ),
       ],
     );
   }
