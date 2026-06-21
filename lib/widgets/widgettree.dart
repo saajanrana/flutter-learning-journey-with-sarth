@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:internship_project/models/eventmodel.dart';
 import 'package:internship_project/screens/cardsscreen.dart';
 import 'package:internship_project/screens/welcomescreen.dart';
-import 'package:internship_project/services/api.dart';
+import 'package:internship_project/models/teammodel.dart';
 import 'package:internship_project/services/valuelisteners.dart';
+import 'package:internship_project/utils/futurebuilderutil.dart';
 import 'package:internship_project/widgets/appbarwidget.dart';
 import 'package:internship_project/widgets/navigationbarwidget.dart';
 
@@ -14,12 +16,14 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  late Future<TeamData> futureTeamData;
+  late Future<TeamModel> futureTeamModel;
+  late Future<EventModel> futureEventModel;
 
   @override
   void initState() {
     super.initState();
-    futureTeamData = fetchTeamData();
+    futureTeamModel = fetchTeamModel('frc2974');
+    futureEventModel = fetchEventModel('2026gadal');
   }
 
   List destinations = [WelcomeScreen(), CardsScreen()];
@@ -43,11 +47,11 @@ class _WidgetTreeState extends State<WidgetTree> {
       //     },
       //   ),
       // ),
-      body: FutureBuilder<TeamData>(
-        future: futureTeamData,
+      body: FutureBuilder<EventModel>(
+        future: futureEventModel,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Text(snapshot.data!.nickname);
+            return FutureBuilderUtil(future: snapshot.data!.matches[0]);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }

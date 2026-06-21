@@ -26,7 +26,7 @@ class _MainAppState extends State<MainApp> {
           onPrimary: Colors.white,
         ),
       ),
-      home: WidgetTree()
+      home: WidgetTree(),
     );
   }
 }
