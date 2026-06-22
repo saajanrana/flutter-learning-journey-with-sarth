@@ -14,44 +14,80 @@ Map<String, String> headers = {
 };
 
 class EventModel {
-  final List teams;
-  final List matches;
+  final Future<List> teams;
+  final List teamKeys;
+  final Future<List> matches;
+  final List matchKeys;
+  final String name;
+  final int year;
   final String key;
 
-  EventModel({required this.teams, required this.matches, required this.key});
+  EventModel({
+    required this.teams,
+    required this.teamKeys,
+    required this.matches,
+    required this.matchKeys,
+    required this.name,
+    required this.year,
+    required this.key,
+  });
 
-  factory EventModel.fromJson(List matchJson, List teamJson, String key) {
-    List t = [];
-    List m = [];
-    for (var matchKey in matchJson) {
-      m.add(fetchMatchModel(matchKey));
-    }
+  factory EventModel.fromJson(
+    List teamJson,
+    List matchJson,
+    Map<String, dynamic> eventJson,
+  ) {
+    List<Future> teams = [];
+    List teamKeys = [];
+    List<Future> matches = [];
+    List matchKeys = [];
     for (var teamKey in teamJson) {
-      t.add(fetchTeamModel(teamKey));
+      teams.add(fetchTeamModel(teamKey));
+      teamKeys.add(teamKey);
     }
-    return EventModel(teams: t, matches: m, key: key);
+    for (var matchKey in matchJson) {
+      matches.add(fetchMatchModel(matchKey));
+      matchKeys.add(matchKey);
+    }
+    return switch (eventJson) {
+      {'key': String key, 'name': String name, 'year': int year} => EventModel(
+        teams: Future.wait(teams),
+        teamKeys: teamKeys,
+        matches: Future.wait(matches),
+        matchKeys: matchKeys,
+        name: name,
+        year: year,
+        key: key,
+      ),
+      _ => throw FormatException('Failed to load Event Data.'),
+    };
   }
 
   @override
-  String toString() => key;
+  String toString() => '$year $name';
 }
 
 Future<EventModel> fetchEventModel(String eventKey) async {
-  final matchResponse = await http.get(
-    Uri.parse('$baseURL/event/$eventKey/matches/keys'),
-    headers: headers,
-  );
-
   final teamResponse = await http.get(
     Uri.parse('$baseURL/event/$eventKey/teams/keys'),
     headers: headers,
   );
+  final matchResponse = await http.get(
+    Uri.parse('$baseURL/event/$eventKey/matches/keys'),
+    headers: headers,
+  );
+  final eventResonse = await http.get(
+    Uri.parse('$baseURL/event/$eventKey/simple'),
+    headers: headers,
+  );
 
-  if (matchResponse.statusCode == 200 && teamResponse.statusCode == 200) {
+  if (matchResponse.statusCode == 200 &&
+      teamResponse.statusCode == 200 &&
+      eventResonse.statusCode == 200) {
     return EventModel.fromJson(
-      jsonDecode(matchResponse.body) as List,
       jsonDecode(teamResponse.body) as List,
-      eventKey,
+      jsonDecode(matchResponse.body) as List,
+      jsonDecode(eventResonse.body) as Map<String, dynamic>,
     );
   } else {
     throw Exception('Failed to load Event Data');

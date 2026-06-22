@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/models/eventmodel.dart';
+import 'package:internship_project/models/yearmodel.dart';
 import 'package:internship_project/screens/cardsscreen.dart';
 import 'package:internship_project/screens/welcomescreen.dart';
 import 'package:internship_project/models/teammodel.dart';
@@ -16,14 +17,14 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-  late Future<TeamModel> futureTeamModel;
   late Future<EventModel> futureEventModel;
+  late Future<YearModel> futureYearModel;
 
   @override
   void initState() {
     super.initState();
-    futureTeamModel = fetchTeamModel('frc2974');
-    futureEventModel = fetchEventModel('2026gadal');
+    futureEventModel = fetchEventModel('2024new');
+    futureYearModel = fetchYearModel(2026);
   }
 
   List destinations = [WelcomeScreen(), CardsScreen()];
@@ -47,11 +48,11 @@ class _WidgetTreeState extends State<WidgetTree> {
       //     },
       //   ),
       // ),
-      body: FutureBuilder<EventModel>(
-        future: futureEventModel,
+      body: FutureBuilder<YearModel>(
+        future: futureYearModel,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return FutureBuilderUtil(future: snapshot.data!.matches[0]);
+            return TextFutureBuilderUtil(future: snapshot.data!.teams);
           } else if (snapshot.hasError) {
             return Text('${snapshot.error}');
           }

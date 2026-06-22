@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class FutureBuilderUtil extends StatelessWidget {
+class TextFutureBuilderUtil extends StatelessWidget {
   final Future<dynamic> future;
 
-  const FutureBuilderUtil({super.key, required this.future});
+  const TextFutureBuilderUtil({super.key, required this.future});
 
   @override
   Widget build(BuildContext context) {
