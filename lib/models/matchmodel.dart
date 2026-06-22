@@ -47,7 +47,15 @@ class MatchModel {
   }
 
   @override
-  String toString() => key;
+  String toString() {
+    String beg = switch (compLvl) {
+      'qm' => 'Qualification Match',
+      'sf' => 'Semifinals Match',
+      'f' => 'Finals Match',
+      String() => "",
+    };
+    return '$beg $matchNum';
+  }
 }
 
 Future<MatchModel> fetchMatchModel(String matchKey) async {

@@ -1,0 +1,55 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:internship_project/models/simpleeventmodel.dart';
+
+String baseURL = 'https://www.thebluealliance.com/api/v3';
+String apiKey =
+    'X6G2LsxbFs9xNzLyOJXeLYaPx8kOsFtcJEBg2XY1r3ssszWYXHAFuMdoKIqaQPJF';
+
+Map<String, String> headers = {
+  'X-TBA-Auth-Key': apiKey,
+  'Accept': 'application/json',
+};
+
+class YearModel {
+  final Future<List> events;
+  final List eventKeys;
+  final int year;
+
+  YearModel({
+    required this.events,
+    required this.eventKeys,
+    required this.year,
+  });
+
+  factory YearModel.fromJson(List eventJson, int year) {
+    List<Future> events = [];
+    List eventKeys = [];
+    for (var eventKey in eventJson) {
+      events.add(fetchSimpleEventModel(eventKey));
+      eventKeys.add(eventKey);
+    }
+    return YearModel(
+      events: Future.wait(events),
+      eventKeys: eventKeys,
+      year: year,
+    );
+  }
+
+  @override
+  String toString() => '$year';
+}
+
+Future<YearModel> fetchYearModel(int year) async {
+  final eventsResponse = await http.get(
+    Uri.parse('$baseURL/events/$year/keys'),
+    headers: headers,
+  );
+
+  if (eventsResponse.statusCode == 200) {
+    return YearModel.fromJson(jsonDecode(eventsResponse.body) as List, year);
+  } else {
+    throw Exception('Failed to load Year Data');
+  }
+}

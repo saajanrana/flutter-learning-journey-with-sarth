@@ -42,7 +42,7 @@ class TeamModel {
   }
 
   @override
-  String toString() => key;
+  String toString() => '$nickname ($teamNumber)';
 }
 
 Future<TeamModel> fetchTeamModel(String teamKey) async {
