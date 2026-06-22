@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/models/eventmodel.dart';
 import 'package:internship_project/models/yearmodel.dart';
+import 'package:internship_project/models/yearmodel.dart';
 import 'package:internship_project/screens/cardsscreen.dart';
 import 'package:internship_project/screens/welcomescreen.dart';
 import 'package:internship_project/models/teammodel.dart';
@@ -23,6 +24,8 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   void initState() {
     super.initState();
+    futureEventModel = fetchEventModel('2024new');
+    futureYearModel = fetchYearModel(2026);
     futureEventModel = fetchEventModel('2024new');
     futureYearModel = fetchYearModel(2026);
   }
