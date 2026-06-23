@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:internship_project/models/simpleeventmodel.dart';
 import 'package:internship_project/models/teammodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
@@ -13,37 +12,25 @@ Map<String, String> headers = {
   'Accept': 'application/json',
 };
 
-class YearModel {
-  final Future<List> events;
-  final List eventKeys;
+class YearTeamsModel {
   final Future<List> teams;
   final List teamKeys;
   final int year;
 
-  YearModel({
-    required this.events,
-    required this.eventKeys,
+  YearTeamsModel({
     required this.teams,
     required this.teamKeys,
     required this.year,
   });
 
-  factory YearModel.fromJson(List eventJson, List teamJson, int year) {
-    List<Future> events = [];
-    List eventKeys = [];
+  factory YearTeamsModel.fromJson(List teamJson, int year) {
     List<Future> teams = [];
     List teamKeys = [];
-    for (var eventKey in eventJson) {
-      events.add(fetchSimpleEventModel(eventKey));
-      eventKeys.add(eventKey);
-    }
     for (var teamKey in teamJson) {
       teams.add(fetchTeamModel(teamKey));
       teamKeys.add(teamKey);
     }
-    return YearModel(
-      events: Future.wait(events),
-      eventKeys: eventKeys,
+    return YearTeamsModel(
       teams: Future.wait(teams),
       teamKeys: teamKeys,
       year: year,
@@ -54,11 +41,7 @@ class YearModel {
   String toString() => '$year';
 }
 
-Future<YearModel> fetchYearModel(int year) async {
-  final eventsResponse = await http.get(
-    Uri.parse('$baseURL/events/$year/keys'),
-    headers: headers,
-  );
+Future<YearTeamsModel> fetchYearTeamsModel(int year) async {
   List teamsResponses = [];
   for (int page = 0; page < 24; page++) {
     teamsResponses.add(
@@ -68,18 +51,21 @@ Future<YearModel> fetchYearModel(int year) async {
       ),
     );
   }
+  bool is200 = true;
+  for (http.Response response in teamsResponses) {
+    is200 = response.statusCode == 200;
+  }
 
-  if (eventsResponse.statusCode == 200 && teamsResponses[0].statusCode == 200) {
-    List teamsResponse = [];
-    for (var teamResponse in teamsResponses) {
-      teamsResponse += jsonDecode(teamResponse.body) as List;
+  if (is200) {
+    List decodedList = [];
+    for (http.Response response in teamsResponses) {
+      decodedList += jsonDecode(response.body) as List;
     }
-    return YearModel.fromJson(
-      jsonDecode(eventsResponse.body) as List,
-      teamsResponse,
+    return YearTeamsModel.fromJson(
+      decodedList,
       year,
     );
   } else {
-    throw Exception('Failed to load Year Data');
+    throw Exception('Failed to load Year Teams Data');
   }
 }

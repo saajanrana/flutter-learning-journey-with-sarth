@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/models/eventmodel.dart';
-import 'package:internship_project/models/yearmodel.dart';
-import 'package:internship_project/models/yearmodel.dart';
+import 'package:internship_project/models/yeareventsmodel.dart';
+import 'package:internship_project/models/yeareventsmodel.dart';
+import 'package:internship_project/models/yearteamsmodel.dart';
 import 'package:internship_project/screens/cardsscreen.dart';
 import 'package:internship_project/screens/welcomescreen.dart';
 import 'package:internship_project/models/teammodel.dart';
@@ -19,15 +20,15 @@ class WidgetTree extends StatefulWidget {
 
 class _WidgetTreeState extends State<WidgetTree> {
   late Future<EventModel> futureEventModel;
-  late Future<YearModel> futureYearModel;
+  late Future<YearEventsModel> futureYearEventsModel;
+  late Future<YearTeamsModel> futureYearTeamsModel;
 
   @override
   void initState() {
     super.initState();
     futureEventModel = fetchEventModel('2024new');
-    futureYearModel = fetchYearModel(2026);
-    futureEventModel = fetchEventModel('2024new');
-    futureYearModel = fetchYearModel(2026);
+    futureYearEventsModel = fetchYearEventsModel(2026);
+    futureYearTeamsModel = fetchYearTeamsModel(2026);
   }
 
   List destinations = [WelcomeScreen(), CardsScreen()];
@@ -51,17 +52,19 @@ class _WidgetTreeState extends State<WidgetTree> {
       //     },
       //   ),
       // ),
-      body: FutureBuilder<YearModel>(
-        future: futureYearModel,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return TextFutureBuilderUtil(future: snapshot.data!.teams);
-          } else if (snapshot.hasError) {
-            return Text('${snapshot.error}');
-          }
-
-          return CircularProgressIndicator();
-        },
+      body: SingleChildScrollView(
+        child: FutureBuilder<YearTeamsModel>(
+          future: futureYearTeamsModel,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return TextFutureBuilderUtil(future: snapshot.data!.teams);
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+        
+            return CircularProgressIndicator();
+          },
+        ),
       ),
 
       bottomNavigationBar: NavigationBarWidget(),
