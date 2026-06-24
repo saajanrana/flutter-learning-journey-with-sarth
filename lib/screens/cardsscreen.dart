@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:internship_project/widgets/appbarwidget.dart';
 import 'package:internship_project/widgets/categorycardwidget.dart';
 import 'package:internship_project/widgets/horizontallistwidget.dart';
 

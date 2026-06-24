@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/models/yeareventsmodel.dart';
 import 'package:internship_project/models/yearteamsmodel.dart';
-import 'package:internship_project/utils/futurebuilderutil.dart';
 import 'package:internship_project/widgets/searchtabwidget.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -44,12 +43,14 @@ class _SearchScreenState extends State<SearchScreen> {
               hintText: 'Search for Events',
               future: futureYearEventsModel,
               type: 'events',
+              search: true,
             ),
             SearchTabWidget(
               controller: teamsController,
               hintText: 'Search for Teams',
               future: futureYearTeamsModel,
-              type: 'teams'
+              type: 'teams',
+              search: true,
             ),
           ],
         ),

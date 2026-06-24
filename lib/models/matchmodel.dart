@@ -16,6 +16,7 @@ class MatchModel {
   final String eventKey;
   final String compLvl;
   final int matchNum;
+  final int setNum;
   final String key;
 
   MatchModel({
@@ -23,6 +24,7 @@ class MatchModel {
     required this.eventKey,
     required this.compLvl,
     required this.matchNum,
+    required this.setNum,
     required this.key,
   });
 
@@ -33,6 +35,7 @@ class MatchModel {
         'event_key': String eventKey,
         'comp_level': String compLvl,
         'match_number': int matchNum,
+        'set_number': int setNum,
         'key': String key,
       } =>
         MatchModel(
@@ -40,6 +43,7 @@ class MatchModel {
           eventKey: eventKey,
           compLvl: compLvl,
           matchNum: matchNum,
+          setNum: setNum,
           key: key,
         ),
       _ => throw FormatException('Failed to load Match Data.'),
@@ -54,7 +58,8 @@ class MatchModel {
       'f' => 'Finals Match',
       String() => "",
     };
-    return '$beg $matchNum';
+    String end = setNum > matchNum ? '$setNum' : '$matchNum';
+    return '$beg $end';
   }
 }
 

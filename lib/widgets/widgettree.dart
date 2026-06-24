@@ -18,7 +18,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
+      appBar: AppBarWidget(backButton: false),
       body: SingleChildScrollView(
         child: ValueListenableBuilder(
           valueListenable: pageNotifier,

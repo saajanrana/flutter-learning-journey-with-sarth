@@ -9,8 +9,8 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
-      body: Text("Details page for grid widget ${widgetNum}"),
+      appBar: AppBarWidget(backButton: true),
+      body: Text("Details page for grid widget $widgetNum"),
     );
   }
 }

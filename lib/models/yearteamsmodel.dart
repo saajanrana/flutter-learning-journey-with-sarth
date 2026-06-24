@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:internship_project/models/teammodel.dart';
+import 'package:internship_project/models/simpleteammodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
 String apiKey =
@@ -27,7 +27,7 @@ class YearTeamsModel {
     List<Future> teams = [];
     List teamKeys = [];
     for (var teamKey in teamJson) {
-      teams.add(fetchTeamModel(teamKey));
+      teams.add(fetchSimpleTeamModel(teamKey));
       teamKeys.add(teamKey);
     }
     return YearTeamsModel(
