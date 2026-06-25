@@ -43,7 +43,7 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                   future: widget.future,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return ListFutureBuilderUtil(
+                      return ClickableListFutureBuilderUtil(
                         future: switch (widget.type) {
                           'events' => snapshot.data!.events,
                           'teams' => snapshot.data!.teams,
@@ -53,6 +53,8 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                         filter: true,
                         filterValue: widget.controller.value.text,
                         type: widget.type,
+                        filterByKey: false,
+                        filterKey: ''
                       );
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');
@@ -71,7 +73,7 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                   future: widget.future,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      return ListFutureBuilderUtil(
+                      return ClickableListFutureBuilderUtil(
                         future: switch (widget.type) {
                           'events' => snapshot.data!.events,
                           'teams' => snapshot.data!.teams,
@@ -81,6 +83,8 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                         filter: true,
                         filterValue: widget.controller.value.text,
                         type: widget.type,
+                        filterByKey: false,
+                        filterKey: ''
                       );
                     } else if (snapshot.hasError) {
                       return Text('${snapshot.error}');

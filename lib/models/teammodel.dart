@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:internship_project/models/matchmodel.dart';
 import 'package:internship_project/models/simpleeventmodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
@@ -46,9 +47,9 @@ class TeamModel {
     }
     List<Future> matches = [];
     List matchKeys = [];
-    for (var eventKey in eventJson) {
-      events.add(fetchSimpleEventModel(eventKey));
-      eventKeys.add(eventKey);
+    for (var matchKey in matchJson) {
+      matches.add(fetchMatchModel(matchKey));
+      matchKeys.add(matchKey);
     }
 
     return switch (teamJson) {
