@@ -12,7 +12,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   late Future<YearEventsModel> futureYearEventsModel;
-  late Future<YearTeamsModel> futureYearTeamsModel;
+  // late Future<YearTeamsModel> futureYearTeamsModel;
   TextEditingController eventsController = TextEditingController();
   TextEditingController teamsController = TextEditingController();
 
@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     futureYearEventsModel = fetchYearEventsModel(2026);
-    futureYearTeamsModel = fetchYearTeamsModel(2026);
+    // futureYearTeamsModel = fetchYearTeamsModel(2026);
   }
 
   @override
@@ -52,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
             //   type: 'teams',
             //   search: true,
             // ),
-            Text('work in progress')
+            Text('Teams search is currently disabled due to API limitations.'),
           ],
         ),
       ),

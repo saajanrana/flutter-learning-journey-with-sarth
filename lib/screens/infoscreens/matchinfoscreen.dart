@@ -39,52 +39,152 @@ class _MatchInfoScreenState extends State<MatchInfoScreen> {
             return Center(
               child: Column(
                 children: [
-                  Text('${matchData.toString()} (${matchData.eventKey})', textScaler: TextScaler.linear(3),),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: Column(
+                  Text(
+                    '${matchData.toString()} (${matchData.eventKey})',
+                    textScaler: TextScaler.linear(3),
+                  ),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxWidth < 600) {
+                        return Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Red Alliance - ${matchData.redAllianceScore}', textScaler: TextScaler.linear(2),  style: TextStyle(color: Colors.red, fontWeight: matchData.redAllianceScore > matchData.blueAllianceScore ? FontWeight.bold : FontWeight.normal),),
-                            SizedBox(
-                              height: 200,
-                              width: 300,
-                              child: ClickableListFutureBuilderUtil(
-                                future: matchData.redAlliance,
-                                filter: false,
-                                filterValue: '',
-                                type: 'teams',
-                                filterByKey: false,
-                                filterKey: '',
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Red Alliance - ${matchData.redAllianceScore}',
+                                    textScaler: TextScaler.linear(2),
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight:
+                                          matchData.redAllianceScore >
+                                              matchData.blueAllianceScore
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 200,
+                                    width: 300,
+                                    child: ClickableListFutureBuilderUtil(
+                                      future: matchData.redAlliance,
+                                      filter: false,
+                                      filterValue: '',
+                                      type: 'teams',
+                                      filterByKey: false,
+                                      filterKey: '',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${matchData.blueAllianceScore} - Blue Alliance',
+                                    textScaler: TextScaler.linear(2),
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight:
+                                          matchData.blueAllianceScore >
+                                              matchData.redAllianceScore
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 200,
+                                    width: 300,
+                                    child: ClickableListFutureBuilderUtil(
+                                      future: matchData.blueAlliance,
+                                      filter: false,
+                                      filterValue: '',
+                                      type: 'teams',
+                                      filterByKey: false,
+                                      filterKey: '',
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                      ),
-              
-                      Flexible(
-                        child: Column(
+                        );
+                      } else {
+                        return Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('${matchData.blueAllianceScore} - Blue Alliance', textScaler: TextScaler.linear(2), style: TextStyle(color: Colors.blue, fontWeight: matchData.blueAllianceScore > matchData.redAllianceScore ? FontWeight.bold : FontWeight.normal),),
-                            SizedBox(
-                              height: 200,
-                              width: 300,
-                              child: ClickableListFutureBuilderUtil(
-                                future: matchData.blueAlliance,
-                                filter: false,
-                                filterValue: '',
-                                type: 'teams',
-                                filterByKey: false,
-                                filterKey: '',
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Red Alliance - ${matchData.redAllianceScore}',
+                                    textScaler: TextScaler.linear(2),
+                                    style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight:
+                                          matchData.redAllianceScore >
+                                              matchData.blueAllianceScore
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 200,
+                                    width: 300,
+                                    child: ClickableListFutureBuilderUtil(
+                                      future: matchData.redAlliance,
+                                      filter: false,
+                                      filterValue: '',
+                                      type: 'teams',
+                                      filterByKey: false,
+                                      filterKey: '',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            Flexible(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '${matchData.blueAllianceScore} - Blue Alliance',
+                                    textScaler: TextScaler.linear(2),
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontWeight:
+                                          matchData.blueAllianceScore >
+                                              matchData.redAllianceScore
+                                          ? FontWeight.bold
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 200,
+                                    width: 300,
+                                    child: ClickableListFutureBuilderUtil(
+                                      future: matchData.blueAlliance,
+                                      filter: false,
+                                      filterValue: '',
+                                      type: 'teams',
+                                      filterByKey: false,
+                                      filterKey: '',
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

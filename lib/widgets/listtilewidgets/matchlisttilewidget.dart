@@ -29,53 +29,95 @@ class MatchListTileWidget extends StatelessWidget {
               MatchInfoScreen(matchName: title, matchKey: matchKey),
         ),
       ),
-      child: ListTile(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(title),
-            Padding(
-              padding: EdgeInsetsGeometry.all(8.0),
-              child: Text(
-                ' ${redAlliance[0].substring(3)} ${redAlliance[1].substring(3)} ${redAlliance[2].substring(3)}',
-                style: TextStyle(color: Colors.red),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (constraints.maxWidth < 600) {
+            return ListTile(
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(title),
+
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      '| $redAllianceScore |',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: redAllianceScore > blueAllianceScore
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      '| $blueAllianceScore |',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: blueAllianceScore > redAllianceScore
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsGeometry.all(8.0),
-              child: Text(
-                '| $redAllianceScore |',
-                style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: redAllianceScore > blueAllianceScore
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
+              contentPadding: EdgeInsets.zero,
+              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+            );
+          } else {
+            return ListTile(
+              title: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(title),
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      ' ${redAlliance[0].substring(3)} ${redAlliance[1].substring(3)} ${redAlliance[2].substring(3)}',
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      '| $redAllianceScore |',
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: redAllianceScore > blueAllianceScore
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      '| $blueAllianceScore |',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: blueAllianceScore > redAllianceScore
+                            ? FontWeight.bold
+                            : FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsGeometry.all(8.0),
+                    child: Text(
+                      '${blueAlliance[0].substring(3)} ${blueAlliance[1].substring(3)} ${blueAlliance[2].substring(3)} ',
+                      style: TextStyle(color: Colors.blue),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Padding(
-              padding: EdgeInsetsGeometry.all(8.0),
-              child: Text(
-                '| $blueAllianceScore |',
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontWeight: blueAllianceScore > redAllianceScore
-                      ? FontWeight.bold
-                      : FontWeight.normal,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsGeometry.all(8.0),
-              child: Text(
-                '${blueAlliance[0].substring(3)} ${blueAlliance[1].substring(3)} ${blueAlliance[2].substring(3)} ',
-                style: TextStyle(color: Colors.blue),
-              ),
-            ),
-          ],
-        ),
-        contentPadding: EdgeInsets.zero,
-        visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+              contentPadding: EdgeInsets.zero,
+              visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+            );
+          }
+        },
       ),
     );
   }
