@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/utils/futurebuilderutil.dart';
+import 'package:internship_project/widgets/loadingwidget.dart';
 
 class SearchTabWidget extends StatefulWidget {
   final TextEditingController controller;
@@ -60,7 +61,7 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                       return Text('${snapshot.error}');
                     }
 
-                    return CircularProgressIndicator();
+                    return LoadingWidget();
                   },
                 ),
               ),
@@ -90,7 +91,7 @@ class _SearchTabWidgetState extends State<SearchTabWidget> {
                       return Text('${snapshot.error}');
                     }
 
-                    return CircularProgressIndicator();
+                    return LoadingWidget();
                   },
                 ),
               ),

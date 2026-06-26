@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:internship_project/models/teammodel.dart';
 import 'package:internship_project/services/valuelisteners.dart';
 import 'package:internship_project/utils/futurebuilderutil.dart';
+import 'package:internship_project/widgets/loadingwidget.dart';
 import 'package:internship_project/widgets/appbarwidget.dart';
 
 class TeamInfoScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                 return Text('${snapshot.error}');
               }
 
-              return CircularProgressIndicator();
+              return LoadingWidget();
             },
           ),
           Flexible(
@@ -78,7 +79,7 @@ class _TeamInfoScreenState extends State<TeamInfoScreen> {
                   return Text('${snapshot.error}');
                 }
             
-                return CircularProgressIndicator();
+                return LoadingWidget();
               },
             ),
           ),

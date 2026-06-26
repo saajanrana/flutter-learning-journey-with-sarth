@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/services/valuelisteners.dart';
+import 'package:internship_project/widgets/loadingwidget.dart';
 import 'package:internship_project/widgets/listtilewidgets/eventlisttilewidget.dart';
 import 'package:internship_project/widgets/listtilewidgets/matchlisttilewidget.dart';
 import 'package:internship_project/widgets/listtilewidgets/teamlisttilewidget.dart';
@@ -20,7 +21,7 @@ class TextFutureBuilderUtil extends StatelessWidget {
           return Text('${snapshot.error}');
         }
 
-        return CircularProgressIndicator();
+        return LoadingWidget();
       },
     );
   }
@@ -77,6 +78,10 @@ class ClickableListFutureBuilderUtil extends StatelessWidget {
                 'matches' => MatchListTileWidget(
                   title: filteredList[index].toString(),
                   matchKey: filteredList[index].key,
+                  redAlliance: List<String>.from(filteredList[index].redAllianceKeys),
+                  redAllianceScore: filteredList[index].redAllianceScore,
+                  blueAlliance: List<String>.from(filteredList[index].blueAllianceKeys),
+                  blueAllianceScore: filteredList[index].blueAllianceScore,
                 ),
                 String() => throw UnimplementedError(),
               };
@@ -86,7 +91,7 @@ class ClickableListFutureBuilderUtil extends StatelessWidget {
           return Text('${snapshot.error}');
         }
 
-        return CircularProgressIndicator();
+        return LoadingWidget();
       },
     );
   }
@@ -141,13 +146,13 @@ class _DropdownListFutureBuilderUtilState
                   widget.value!.write(v);
                 }),
               );
-            }
+            },
           );
         } else if (snapshot.hasError) {
           return Text('${snapshot.error}');
         }
 
-        return CircularProgressIndicator();
+        return LoadingWidget();
       },
     );
   }

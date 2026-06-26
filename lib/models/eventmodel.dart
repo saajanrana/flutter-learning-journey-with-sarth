@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:internship_project/models/matchmodel.dart';
 import 'package:internship_project/models/simpleteammodel.dart';
-import 'package:internship_project/models/teammodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
 String apiKey =

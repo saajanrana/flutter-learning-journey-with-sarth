@@ -22,7 +22,7 @@ class TeamListTileWidget extends StatelessWidget {
         ),
       ),
       child: ListTile(
-        title: Text(title),
+        title: Center(child: Text(title)),
         contentPadding: EdgeInsets.zero,
         visualDensity: VisualDensity(horizontal: 0, vertical: -4),
       ),

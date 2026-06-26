@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:internship_project/models/eventmodel.dart';
-import 'package:internship_project/widgets/appbarwidget.dart';
 import 'package:internship_project/widgets/searchtabwidget.dart';
 
 class EventInfoScreen extends StatefulWidget {

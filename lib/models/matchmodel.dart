@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:internship_project/models/simpleteammodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
 String apiKey =
@@ -12,7 +13,12 @@ Map<String, String> headers = {
 };
 
 class MatchModel {
-  final Object alliances;
+  final Future<List> redAlliance;
+  final List redAllianceKeys;
+  final int redAllianceScore;
+  final Future<List> blueAlliance;
+  final List blueAllianceKeys;
+  final int blueAllianceScore;
   final String eventKey;
   final String compLvl;
   final int matchNum;
@@ -20,7 +26,12 @@ class MatchModel {
   final String key;
 
   MatchModel({
-    required this.alliances,
+    required this.redAlliance,
+    required this.redAllianceKeys,
+    required this.redAllianceScore,
+    required this.blueAlliance,
+    required this.blueAllianceKeys,
+    required this.blueAllianceScore,
     required this.eventKey,
     required this.compLvl,
     required this.matchNum,
@@ -29,9 +40,19 @@ class MatchModel {
   });
 
   factory MatchModel.fromJson(Map<String, dynamic> json) {
+    List<Future> redAlliance = [];
+    List redAllianceKeys = json['alliances']['red']['team_keys'];
+    for (var key in redAllianceKeys) {
+      redAlliance.add(fetchSimpleTeamModel(key));
+    }
+    List<Future> blueAlliance = [];
+    List blueAllianceKeys = json['alliances']['blue']['team_keys'];
+    for (var key in blueAllianceKeys) {
+      blueAlliance.add(fetchSimpleTeamModel(key));
+    }
+    
     return switch (json) {
       {
-        'alliances': Object alliances,
         'event_key': String eventKey,
         'comp_level': String compLvl,
         'match_number': int matchNum,
@@ -39,7 +60,12 @@ class MatchModel {
         'key': String key,
       } =>
         MatchModel(
-          alliances: alliances,
+          redAlliance: Future.wait(redAlliance),
+          redAllianceKeys: redAllianceKeys,
+          redAllianceScore: json['alliances']['red']['score'],
+          blueAlliance: Future.wait(blueAlliance),
+          blueAllianceKeys: blueAllianceKeys,
+          blueAllianceScore: json['alliances']['blue']['score'],
           eventKey: eventKey,
           compLvl: compLvl,
           matchNum: matchNum,
@@ -65,7 +91,7 @@ class MatchModel {
 
 Future<MatchModel> fetchMatchModel(String matchKey) async {
   final response = await http.get(
-    Uri.parse('$baseURL/match/$matchKey'),
+    Uri.parse('$baseURL/match/$matchKey/simple'),
     headers: headers,
   );
 

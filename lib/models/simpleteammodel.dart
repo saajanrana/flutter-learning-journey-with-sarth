@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:internship_project/models/simpleeventmodel.dart';
 
 String baseURL = 'https://www.thebluealliance.com/api/v3';
 String apiKey =

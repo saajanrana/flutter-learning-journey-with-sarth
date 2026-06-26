@@ -45,13 +45,14 @@ class _SearchScreenState extends State<SearchScreen> {
               type: 'events',
               search: true,
             ),
-            SearchTabWidget(
-              controller: teamsController,
-              hintText: 'Search for Teams',
-              future: futureYearTeamsModel,
-              type: 'teams',
-              search: true,
-            ),
+            // SearchTabWidget(
+            //   controller: teamsController,
+            //   hintText: 'Search for Teams',
+            //   future: futureYearTeamsModel,
+            //   type: 'teams',
+            //   search: true,
+            // ),
+            Text('work in progress')
           ],
         ),
       ),
